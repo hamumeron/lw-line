@@ -67,7 +67,7 @@ async function handleCommand(cmd) {
   else if (cmd.startsWith("lw connect")) {
     const match = cmd.match(/lw connect (https?:\/\/[^\s]+)/);
     if (!match) return log("URL指定が必要です");
-    const res = await fetch("https://your-worker.yourname.workers.dev/connect?url=" + encodeURIComponent(match[1]));
+    const res = await fetch("https://lw-line.nekosuke-1012.workers.dev/connect?url=" + encodeURIComponent(match[1]));
     const text = await res.text();
     log(`接続結果:\n${text}`);
   }
