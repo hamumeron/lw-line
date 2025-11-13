@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>lw line cmd--</title>
+<style>
+  body {
+    background: #0d0d0d;
+    color: #00ff00;
+    font-family: monospace;
+    padding: 30px;
+  }
+  h1 { color: #0f0; border-bottom: 1px solid #0f0; padding-bottom: 5px; }
+  code { color: #8f8; }
+  ul { list-style-type: none; padding: 0; }
+  li { margin: 6px 0; }
+</style>
+</head>
+<body>
+  <h1>lw line cmd--</h1>
+  <ul>
+    <li><code>lw grant</code> … 初回に実行してPCのフォルダアクセスを許可</li>
+    <li><code>lw neW_FOLDA \name="フォルダ名"\</code> … 新しいフォルダを作成</li>
+    <li><code>lw neW_FILE \name="ファイル名"\</code> … 新しいファイルを作成</li>
+    <li><code>lw writE FILE \name="ファイル名"\</code> … 書き込みモードにして内容入力</li>
+    <li><code>lw FILE \name="ファイル名"\</code> … ファイルの中身を参照</li>
+    <li><code>lw deletE_FILE \name="ファイル名"\</code> … 指定したファイルを削除</li>
+    <li><code>lw Device_IP</code> … あなたのグローバルIPを表示</li>
+    <li><code>lw connect https://example.com</code> … 指定したURLにバックグラウンド接続</li>
+  </ul>
+
+  <hr>
+  <p>コマンドはすべて <code>lw</code> から始める必要があります。</p>
+  <p>※ <code>name=""</code> の指定時には必ず前後に <code>\</code> を付けてください。</p>
+  <p style="color:#888;">version: lw line v1.0</p>
+</body>
+</html>
