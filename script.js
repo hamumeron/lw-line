@@ -19,13 +19,14 @@ async function writeFile(name, content) {
   const writable = await fileHandle.createWritable();
   await writable.write(content);
   await writable.close();
-  log(`💾 ${name} に書き込みしました`);
+  log(`${name} に書き込みしました`);
 }
 
 async function handleCommand(cmd) {
   log(`> ${cmd}`);
   if (!cmd.startsWith("lw")) return log("The command must start with lw.");
 
+  // --- ディレクトリ・ファイル系 ---
   if (cmd === "lw grant") {
     await requestDirAccess();
   }
@@ -56,7 +57,7 @@ async function handleCommand(cmd) {
     const fileHandle = await dirHandle.getFileHandle(name);
     const file = await fileHandle.getFile();
     const text = await file.text();
-    log(`📖 ${name} の内容:\n${text}`);
+    log(`${name} の内容:\n${text}`);
   }
   else if (cmd.startsWith("lw deletE_FILE")) {
     const match = cmd.match(/name="(.+?)"/);
@@ -64,6 +65,7 @@ async function handleCommand(cmd) {
     await dirHandle.removeEntry(match[1]);
     log(`🗑️ ${match[1]} を削除しました`);
   }
+
   else if (cmd.startsWith("lw connect")) {
     const match = cmd.match(/lw connect (https?:\/\/[^\s]+)/);
     if (!match) return log("URL指定が必要です");
@@ -72,10 +74,38 @@ async function handleCommand(cmd) {
     log(`接続結果:\n${text}`);
   }
   else if (cmd === "lw Device_IP") {
-    const res = await fetch("https://your-worker.yourname.workers.dev/ip");
+    const res = await fetch("https://lw-line.nekosuke-1012.workers.dev/ip");
     const ip = await res.text();
     log(`IP: ${ip}`);
   }
+
+  else if (cmd.startsWith("lw ruN_JavaScript")) {
+    const match = cmd.match(/\\script="([\s\S]*?)"\\/);
+    if (match) {
+      const code = match[1];
+      const newTab = window.open("about:blank");
+      newTab.document.open();
+      newTab.document.write(`<script>${code}<\/script>`);
+      newTab.document.close();
+      log("about:blankでJavaScriptを実行しました");
+    } else {
+      log("コマンドの書式が正しくありません。\\script=\"コード\"\\ の形式で入力してください");
+    }
+  }
+  else if (cmd.startsWith("lw ruN_HTML")) {
+    const match = cmd.match(/\\script="([\s\S]*?)"\\/);
+    if (match) {
+      const html = match[1];
+      const newTab = window.open("about:blank");
+      newTab.document.open();
+      newTab.document.write(html);
+      newTab.document.close();
+      log("about:blankでHTMLを表示しました");
+    } else {
+      log("コマンドの書式が正しくありません。\\script=\"HTML\"\\ の形式で入力してください");
+    }
+  }
+
   else {
     log("未知のコマンドです。");
   }
